@@ -4,12 +4,14 @@ version: 1.0.0+2
 homepage: https://github.com/chmoore889/esp_rainmaker
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ^3.8.0
 
 dependencies:
   http: ^1.1.2
   meta: ^1.10.0
   isolate_json: ^2.0.0
+  build_runner: ^2.4.15
 
 dev_dependencies:
-  flutter_lints: any
+  lints: ^6.0.0
+  json_serializable: ^6.9.5

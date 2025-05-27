@@ -23,7 +23,7 @@ class DeviceGrouping {
   /// Gets all groups if the [groupId] is
   /// not provided.
   /// Starts at the group after [startId] if provided, does not include it.
-  Future<DeviceGroups> getGroup({
+  Future<GetUserDeviceGroupResponse> getGroup({
     String? groupId,
     bool nodeList = false,
     bool subGroups = false,
@@ -53,7 +53,7 @@ class DeviceGrouping {
       throw bodyResp['description'];
     }
 
-    return DeviceGroups.fromJson(bodyResp);
+    return GetUserDeviceGroupResponse.fromJson(bodyResp);
   }
 
   /// Creates a new user device group.

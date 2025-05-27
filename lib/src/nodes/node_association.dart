@@ -27,16 +27,17 @@ class NodeAssociation {
   /// Can optionally include node details by setting [includeNodeDetails]
   /// true. Will throw an exception when there is a failure containing
   /// a description of the failure.
-  Future<NodesList> nodes(
-      {String? nodeId,
-      bool includeNodeDetails = false,
-      bool status = true,
-      bool config = true,
-      bool params = true,
-      String? startId,
-      int? numRecords,
-      showTags = false,
-      isMatter = false}) async {
+  Future<GetNodesList> nodes({
+    String? nodeId,
+    bool includeNodeDetails = false,
+    bool status = true,
+    bool config = true,
+    bool params = true,
+    String? startId,
+    int? numRecords,
+    showTags = false,
+    isMatter = false,
+  }) async {
     final uri = _urlBase.getPath(_nodesBase, {
       'node_id': nodeId ?? '',
       'node_details': includeNodeDetails.toString(),
@@ -61,7 +62,7 @@ class NodeAssociation {
       throw bodyResp['description'];
     }
 
-    return NodesList.fromJson(bodyResp);
+    return GetNodesList.fromJson(bodyResp);
   }
 
   /// Adds tags to the given **nodeId**.
@@ -122,7 +123,7 @@ class NodeAssociation {
   ///
   /// Will throw an exception when there is a failure containing a
   /// description of the failure.
-  Future<NodeConfig> nodeConfig(String nodeId) async {
+  Future<NodeConfiguration> nodeConfig(String nodeId) async {
     final uri = _urlBase.getPath(_nodeConfig, {
       'nodeid': nodeId,
     });
@@ -139,7 +140,7 @@ class NodeAssociation {
       throw bodyResp['description'];
     }
 
-    return NodeConfig.fromJson(bodyResp);
+    return NodeConfiguration.fromJson(bodyResp);
   }
 
   /// Adds a user node mapping and returns the **request id**.
@@ -225,7 +226,7 @@ class NodeAssociation {
   ///
   /// Will throw an exception when there is a failure containing a
   /// description of the failure.
-  Future<NodeConnectivity> getNodeStatus(String nodeId) async {
+  Future<Connectivity> getNodeStatus(String nodeId) async {
     final uri = _urlBase.getPath(_nodeStatus, {
       'nodeid': nodeId,
     });
@@ -242,7 +243,7 @@ class NodeAssociation {
       throw bodyResp['description'];
     }
 
-    return NodeConnectivity.fromJson(bodyResp['connectivity']);
+    return Connectivity.fromJson(bodyResp['connectivity']);
   }
 
   /// Shares nodes with another user.

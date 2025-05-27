@@ -1,7 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'package:esp_rainmaker/esp_rainmaker.dart';
 import 'package:http/http.dart';
 import 'package:isolate_json/isolate_json.dart';
 import 'package:meta/meta.dart';
+
+part 'node_status.g.dart';
+
 
 /// Provides access to methods for obtaining and updating node state.
 class NodeState {
@@ -318,12 +323,14 @@ class NodeState {
   }
 }
 
-@immutable
-class SetNodeParamsRequestBody {
-  static const String nodeIDKey = 'node_id';
-  static const String payloadKey = 'payload';
 
+@immutable
+@JsonSerializable(includeIfNull: false)
+class SetNodeParamsRequestBody {
+
+  @JsonKey(name: 'node_id')
   final String nodeID;
+
   final Map<String, dynamic> payload;
 
   const SetNodeParamsRequestBody({
@@ -331,44 +338,41 @@ class SetNodeParamsRequestBody {
     required this.payload,
   });
 
-  factory SetNodeParamsRequestBody.fromJson(Map<String, dynamic> json) {
-    return SetNodeParamsRequestBody(
-      nodeID: json[SetNodeParamsRequestBody.nodeIDKey],
-      payload: json[SetNodeParamsRequestBody.payloadKey],
-    );
-  }
+  factory SetNodeParamsRequestBody.fromJson(Map<String, dynamic> json) => _$SetNodeParamsRequestBodyFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-    SetNodeParamsRequestBody.nodeIDKey: nodeID,
-    SetNodeParamsRequestBody.payloadKey: payload,
-  };
+  Map<String, dynamic> toJson() => _$SetNodeParamsRequestBodyToJson(this);
 }
+
 
 /// Details the times at which a schedule event should trigger.
 @immutable
-abstract class ScheduleTrigger {
+sealed class ScheduleTrigger {
+
   /// The time in minutes since midnight that an action is triggered.
+  @JsonKey(name: 'm')
   final int minutesSinceMidnight;
 
   const ScheduleTrigger(this.minutesSinceMidnight);
 }
 
+
 @immutable
+@JsonSerializable(includeIfNull: false)
 class DayOfWeekTrigger extends ScheduleTrigger {
+
   /// Days of week that the action should trigger.
+  @JsonKey(name: 'd')
   final List<DaysOfWeek> daysOfWeek;
 
   const DayOfWeekTrigger(this.daysOfWeek, int minutesSinceMidnight)
       : super(minutesSinceMidnight);
 
-  factory DayOfWeekTrigger.fromJson(Map<String, dynamic> json) {
-    return DayOfWeekTrigger(
-      _parseBit(json['d']),
-      json['m']
-    );
-  }
+  // TODO - parse bit in fromJson
+  factory DayOfWeekTrigger.fromJson(Map<String, dynamic> json) => _$DayOfWeekTriggerFromJson(json);
 
-  static List<DaysOfWeek> _parseBit(int bit) {
+  Map<String, dynamic> toJson() => _$DayOfWeekTriggerToJson(this);
+
+  static List<DaysOfWeek> parseBit(int bit) {
     List<DaysOfWeek> result = [];
 
     for(int i = 0; i < DaysOfWeek.values.length; i++) {
@@ -381,35 +385,37 @@ class DayOfWeekTrigger extends ScheduleTrigger {
   }
 }
 
+
 @immutable
+@JsonSerializable(includeIfNull: false)
 class DateTrigger extends ScheduleTrigger {
+
   /// Months that the action should trigger at.
+  @JsonKey(name: 'mm')
   final List<MonthsOfYear> months;
 
   /// Day of month that action should trigger.
+  @JsonKey(name: 'dd')
   final int day;
 
   /// Year that the action should trigger.
+  @JsonKey(name: 'yy')
   final int year;
 
   /// If the schedule should repeat every year.
+  @JsonKey(name: 'r')
   final bool repeatEveryYear;
 
   const DateTrigger(this.months, this.day, this.year, this.repeatEveryYear,
       int minutesSinceMidnight)
       : super(minutesSinceMidnight);
 
-  factory DateTrigger.fromJson(Map<String, dynamic> json) {
-    return DateTrigger(
-      _parseBit(json['mm']),
-      json['dd'],
-      json['yy'],
-      json['r'] == 1 ? true : false,
-      json['m'],
-    );
-  }
+  // TODO - repeat 1 or 0 instead of true or false
+  factory DateTrigger.fromJson(Map<String, dynamic> json) => _$DateTriggerFromJson(json);
 
-  static List<MonthsOfYear> _parseBit(int bit) {
+  Map<String, dynamic> toJson() => _$DateTriggerToJson(this);
+
+  static List<MonthsOfYear> parseBit(int bit) {
     List<MonthsOfYear> result = [];
 
     for(int i = 0; i < MonthsOfYear.values.length; i++) {
@@ -422,6 +428,7 @@ class DateTrigger extends ScheduleTrigger {
   }
 }
 
+
 enum DaysOfWeek {
   monday,
   tuesday,
@@ -431,6 +438,7 @@ enum DaysOfWeek {
   saturday,
   sunday,
 }
+
 
 enum MonthsOfYear {
   january,
@@ -447,10 +455,12 @@ enum MonthsOfYear {
   december,
 }
 
+
 enum ScheduleEnableOperation {
   disable,
   enable,
 }
+
 
 extension ParseEnableOperationToString on ScheduleEnableOperation {
   String toShortString() {
