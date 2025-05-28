@@ -1,15 +1,14 @@
 import 'package:esp_rainmaker/esp_rainmaker.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:meta/meta.dart';
-
+part 'response_models.freezed.dart';
 part 'response_models.g.dart';
 
 
 /// List of device groups.
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class GetUserDeviceGroupResponse {
+class GetUserDeviceGroupResponse with _$GetUserDeviceGroupResponse {
 
   /// List of device groups.
   @JsonKey(name: 'groups')
@@ -31,17 +30,12 @@ class GetUserDeviceGroupResponse {
   factory GetUserDeviceGroupResponse.fromJson(Map<String, dynamic> json) => _$GetUserDeviceGroupResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetUserDeviceGroupResponseToJson(this);
-
-  @override
-  String toString() {
-    return 'GetUserDeviceGroupResponse(deviceGroups: $deviceGroups, total: $total, nextID: $nextID)';
-  }
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class UserDeviceGroup {
+class UserDeviceGroup with _$UserDeviceGroup {
 
   /// Name of the group.
   @JsonKey(name: 'group_name')
@@ -123,35 +117,12 @@ class UserDeviceGroup {
   factory UserDeviceGroup.fromJson(Map<String, dynamic> json) => _$UserDeviceGroupFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserDeviceGroupToJson(this);
-
-  @override
-  String toString() {
-    return 'UserDeviceGroup('
-        'name: $name, '
-        'groupOD: $groupID, '
-        'primary: $primary, '
-        'parentGroupID: $parentGroupID, '
-        'isMatter: $isMatter, '
-        'fabricID: $fabricID, '
-        'type: $type, '
-        'mutuallyExclusive: $mutuallyExclusive, '
-        'nodeIDs: $nodeIDs, '
-        'nodeDetails: $nodeDetails, '
-        'fabricDetails: $fabricDetails, '
-        'description: $description, '
-        'metadata: $metadata, '
-        'groupMetadata: $groupMetadata, '
-        'customData: $customData, '
-        'groupQuery: $groupQuery, '
-        'subgroups: $subgroups, '
-        'nextGroupID: $nextGroupID)';
-  }
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class UserDeviceGroupFabricDetails {
+class UserDeviceGroupFabricDetails with _$UserDeviceGroupFabricDetails {
 
   @JsonKey(name: 'root_ca')
   final String? rootCA;
@@ -182,15 +153,4 @@ class UserDeviceGroupFabricDetails {
   factory UserDeviceGroupFabricDetails.fromJson(Map<String, dynamic> json) => _$UserDeviceGroupFabricDetailsFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserDeviceGroupFabricDetailsToJson(this);
-
-  @override
-  String toString() {
-    return 'UserDeviceGroupFabricDetails('
-        'rootCA: $rootCA, '
-        'groupCatIDAdmin: $groupCatIDAdmin, '
-        'groupCatIDOperate: $groupCatIDOperate, '
-        'matterUserID: $matterUserID, '
-        'userCatID: $userCatID, '
-        'ipk: $ipk)';
-  }
 }

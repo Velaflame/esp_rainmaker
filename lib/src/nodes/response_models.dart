@@ -1,17 +1,16 @@
-import 'package:json_annotation/json_annotation.dart';
-
-import 'package:esp_rainmaker/src/api_response_models.dart';
-import 'package:meta/meta.dart';
-
 import 'node_status.dart';
 
+import 'package:esp_rainmaker/src/api_response_models.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'response_models.freezed.dart';
 part 'response_models.g.dart';
 
 
 /// List of node IDs and node data if requested.
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class GetNodesList {
+class GetNodesList with _$GetNodesList {
 
   /// List of node IDs.
   @JsonKey(name: 'nodes')
@@ -39,18 +38,13 @@ class GetNodesList {
   factory GetNodesList.fromJson(Map<String, dynamic> json) => _$GetNodesListFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetNodesListToJson(this);
-
-  @override
-  String toString() {
-    return 'GetNodesList(NodeIDs: $nodeIDs, nodeDetails: $nodeDetails, nextID: $nextID, totalNodes: $totalNodes)';
-  }
 }
 
 
 /// Detailed information related to a node.
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class NodeDetails {
+class NodeDetails with _$NodeDetails {
 
   /// The node's ID.
   @JsonKey(name: 'id')
@@ -108,24 +102,6 @@ class NodeDetails {
   factory NodeDetails.fromJson(Map<String, dynamic> json) => _$NodeDetailsFromJson(json);
 
   Map<String, dynamic> toJson() => _$NodeDetailsToJson(this);
-
-  @override
-  String toString() {
-    return 'NodeDetails('
-        'nodeID: $nodeID, '
-        'role: $role, '
-        'primary: $primary, '
-        'commandResponse: $commandResponse, '
-        'status: $status, '
-        'config: $config, '
-        'params: $params, '
-        'tags: $tags, '
-        'isMatter: $isMatter, '
-        'metadata: $metadata, '
-        'nodeType: $nodeType, '
-        'mappingTimestamp: $mappingTimestamp, '
-        'adminAccess: $adminAccess)';
-  }
 }
 
 
@@ -139,9 +115,9 @@ enum AdminAccessType {
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class LocalControlData {
+class LocalControlData with _$LocalControlData {
 
   @JsonKey(name: 'POP')
   final String proofOfPossession;
@@ -157,17 +133,12 @@ class LocalControlData {
   factory LocalControlData.fromJson(Map<String, dynamic> json) => _$LocalControlDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$LocalControlDataToJson(this);
-
-  @override
-  String toString() {
-    return 'LocalControlData(proofOfPossession: $proofOfPossession, type: $type)';
-  }
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class SystemData {
+class SystemData with _$SystemData {
 
   @JsonKey(name: 'Reboot')
   final bool? reboot;
@@ -187,17 +158,12 @@ class SystemData {
   factory SystemData.fromJson(Map<String, dynamic> json) => _$SystemDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$SystemDataToJson(this);
-
-  @override
-  String toString() {
-    return 'SystemData(reboot: $reboot, factoryReset: $factoryReset, wifiReset: $wifiReset)';
-  }
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class Schedule {
+class Schedule with _$Schedule {
   final Map<String, dynamic>? action;
   final bool enabled;
   final String scheduleID;
@@ -217,11 +183,6 @@ class Schedule {
   factory Schedule.fromJson(Map<String, dynamic> json) => _$ScheduleFromJson(json);
 
   Map<String, dynamic> toJson() => _$ScheduleToJson(this);
-
-  @override
-  String toString() {
-    return 'Schedule(action: $action, enabled: $enabled, scheduleID: $scheduleID, name: $name)';
-  }
 }
 
 List<ScheduleTrigger> triggersFromJson(List<dynamic> json) {
@@ -246,9 +207,9 @@ List<dynamic> triggersToJson(List<ScheduleTrigger> exercises) {
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class TimeZoneData {
+class TimeZoneData with _$TimeZoneData {
 
   @JsonKey(name: 'TZ')
   final String timezone;
@@ -264,18 +225,13 @@ class TimeZoneData {
   factory TimeZoneData.fromJson(Map<String, dynamic> json) => _$TimeZoneDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$TimeZoneDataToJson(this);
-
-  @override
-  String toString() {
-    return 'TimeZoneData(timezone: $timezone, posix: $posix)';
-  }
 }
 
 
 /// Connectivity information.
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class Connectivity {
+class Connectivity with _$Connectivity {
 
   /// Connectivity status.
   final NodeConnectivity connectivity;
@@ -287,18 +243,13 @@ class Connectivity {
   factory Connectivity.fromJson(Map<String, dynamic> json) => _$ConnectivityFromJson(json);
 
   Map<String, dynamic> toJson() => _$ConnectivityToJson(this);
-
-  @override
-  String toString() {
-    return 'Connectivity(connectivity: $connectivity)';
-  }
 }
 
 
 /// Connectivity information related to a node.
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class NodeConnectivity {
+class NodeConnectivity with _$NodeConnectivity {
 
   /// Connectivity status of a node.
   @JsonKey(name: 'connected')
@@ -315,18 +266,13 @@ class NodeConnectivity {
   factory NodeConnectivity.fromJson(Map<String, dynamic> json) => _$NodeConnectivityFromJson(json);
 
   Map<String, dynamic> toJson() => _$NodeConnectivityToJson(this);
-
-  @override
-  String toString() {
-    return 'NodeConnectivity(isConnected: $isConnected, timestamp: $timestamp)';
-  }
 }
 
 
 /// Configuration information related to a node.
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class NodeConfiguration {
+class NodeConfiguration with _$NodeConfiguration {
 
   /// The node's ID.
   @JsonKey(name: 'node_id')
@@ -356,21 +302,12 @@ class NodeConfiguration {
   factory NodeConfiguration.fromJson(Map<String, dynamic> json) => _$NodeConfigurationFromJson(json);
 
   Map<String, dynamic> toJson() => _$NodeConfigurationToJson(this);
-
-  @override
-  String toString() {
-    return 'NodeConfig('
-        'nodeID: $nodeID, '
-        'configVersion: $configVersion, '
-        'info: $info, attributes: $attributes, '
-        'services: $services)';
-  }
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class NodeInfo {
+class NodeInfo with _$NodeInfo {
 
   /// The version of firmware running on the node.
   @JsonKey(name: 'fw_version')
@@ -391,18 +328,13 @@ class NodeInfo {
   factory NodeInfo.fromJson(Map<String, dynamic> json) => _$NodeInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$NodeInfoToJson(this);
-
-  @override
-  String toString() {
-    return 'NodeInfo(firmwareVersion: $firmwareVersion, name: $name, type: $type)';
-  }
 }
 
 
 /// The status of a mapping operation.
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class MappingStatus {
+class MappingStatus with _$MappingStatus {
 
   /// The ID of the node being mapped.
   @JsonKey(name: 'user_node_id')
@@ -442,18 +374,13 @@ class MappingStatus {
   factory MappingStatus.fromJson(Map<String, dynamic> json) => _$MappingStatusFromJson(json);
 
   Map<String, dynamic> toJson() => _$MappingStatusToJson(this);
-
-  @override
-  String toString() {
-    return 'MappingStatus(nodeID: $nodeID, timestamp: $timestamp, status: $status, confirmTimestamp: $confirmTimestamp, discardedTimestamp: $discardedTimestamp, source: $source, requestID: $requestID)';
-  }
 }
 
 
 /// Details of who a node is shared with.
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class SharingDetail {
+class SharingDetail with _$SharingDetail {
 
   /// The ID of the node in question.
   @JsonKey(name: 'node_id')
@@ -470,17 +397,12 @@ class SharingDetail {
   factory SharingDetail.fromJson(Map<String, dynamic> json) => _$SharingDetailFromJson(json);
 
   Map<String, dynamic> toJson() => _$SharingDetailToJson(this);
-
-  @override
-  String toString() {
-    return 'SharingDetail(nodeID: $nodeID, users: $users)';
-  }
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class SharingDetailUsers {
+class SharingDetailUsers with _$SharingDetailUsers {
   /// The primary users associated with the node.
   final List<String> primary;
 
@@ -495,11 +417,6 @@ class SharingDetailUsers {
   factory SharingDetailUsers.fromJson(Map<String, dynamic> json) => _$SharingDetailUsersFromJson(json);
 
   Map<String, dynamic> toJson() => _$SharingDetailUsersToJson(this);
-
-  @override
-  String toString() {
-    return 'SharingDetailUsers(primary: $primary, secondary $secondary)';
-  }
 }
 
 

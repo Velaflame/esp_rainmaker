@@ -11,7 +11,10 @@ dependencies:
   meta: ^1.10.0
   isolate_json: ^2.0.0
   build_runner: ^2.4.15
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   lints: ^6.0.0
   json_serializable: ^6.9.5
+  freezed: ^3.0.6

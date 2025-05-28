@@ -1,10 +1,9 @@
-import 'package:json_annotation/json_annotation.dart';
-
 import 'package:esp_rainmaker/esp_rainmaker.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart';
 import 'package:isolate_json/isolate_json.dart';
-import 'package:meta/meta.dart';
 
+part 'node_status.freezed.dart';
 part 'node_status.g.dart';
 
 
@@ -324,9 +323,9 @@ class NodeState {
 }
 
 
-@immutable
+@freezed
 @JsonSerializable(includeIfNull: false)
-class SetNodeParamsRequestBody {
+class SetNodeParamsRequestBody with _$SetNodeParamsRequestBody {
 
   @JsonKey(name: 'node_id')
   final String nodeID;
@@ -364,8 +363,7 @@ class DayOfWeekTrigger extends ScheduleTrigger {
   @JsonKey(name: 'd')
   final List<DaysOfWeek> daysOfWeek;
 
-  const DayOfWeekTrigger(this.daysOfWeek, int minutesSinceMidnight)
-      : super(minutesSinceMidnight);
+  const DayOfWeekTrigger(super.minutesSinceMidnight, this.daysOfWeek);
 
   // TODO - parse bit in fromJson
   factory DayOfWeekTrigger.fromJson(Map<String, dynamic> json) => _$DayOfWeekTriggerFromJson(json);
