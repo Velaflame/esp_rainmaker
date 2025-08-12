@@ -603,7 +603,7 @@ as dynamic,
 /// @nodoc
 mixin _$NodeInfo {
 
- String get firmwareVersion; String get name; String get type;
+ String get firmwareVersion; String get name; String get type; String get platform; String get projectName; String get model;
 /// Create a copy of NodeInfo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -614,16 +614,16 @@ $NodeInfoCopyWith<NodeInfo> get copyWith => _$NodeInfoCopyWithImpl<NodeInfo>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NodeInfo&&(identical(other.firmwareVersion, firmwareVersion) || other.firmwareVersion == firmwareVersion)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NodeInfo&&(identical(other.firmwareVersion, firmwareVersion) || other.firmwareVersion == firmwareVersion)&&(identical(other.name, name) || other.name == name)&&(identical(other.type, type) || other.type == type)&&(identical(other.platform, platform) || other.platform == platform)&&(identical(other.projectName, projectName) || other.projectName == projectName)&&(identical(other.model, model) || other.model == model));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,firmwareVersion,name,type);
+int get hashCode => Object.hash(runtimeType,firmwareVersion,name,type,platform,projectName,model);
 
 @override
 String toString() {
-  return 'NodeInfo(firmwareVersion: $firmwareVersion, name: $name, type: $type)';
+  return 'NodeInfo(firmwareVersion: $firmwareVersion, name: $name, type: $type, platform: $platform, projectName: $projectName, model: $model)';
 }
 
 
@@ -634,7 +634,7 @@ abstract mixin class $NodeInfoCopyWith<$Res>  {
   factory $NodeInfoCopyWith(NodeInfo value, $Res Function(NodeInfo) _then) = _$NodeInfoCopyWithImpl;
 @useResult
 $Res call({
- String firmwareVersion, String name, String type
+ String firmwareVersion, String name, String type, String model, String platform, String projectName
 });
 
 
@@ -651,11 +651,14 @@ class _$NodeInfoCopyWithImpl<$Res>
 
 /// Create a copy of NodeInfo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? firmwareVersion = null,Object? name = null,Object? type = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? firmwareVersion = null,Object? name = null,Object? type = null,Object? model = null,Object? platform = null,Object? projectName = null,}) {
   return _then(NodeInfo(
 firmwareVersion: null == firmwareVersion ? _self.firmwareVersion : firmwareVersion // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,model: null == model ? _self.model : model // ignore: cast_nullable_to_non_nullable
+as String,platform: null == platform ? _self.platform : platform // ignore: cast_nullable_to_non_nullable
+as String,projectName: null == projectName ? _self.projectName : projectName // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

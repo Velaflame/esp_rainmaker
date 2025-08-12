@@ -319,10 +319,23 @@ class NodeInfo with _$NodeInfo {
   /// The type of the node.
   final String type;
 
+  /// The chip of the node.
+  final String platform;
+
+  /// The firmware build label of the node.
+  @JsonKey(name: 'project_name')
+  final String projectName;
+
+  /// Also the firmware build label of the node?
+  final String model;
+
   NodeInfo({
     required this.firmwareVersion,
     required this.name,
     required this.type,
+    required this.model,
+    required this.platform,
+    required this.projectName,
   });
 
   factory NodeInfo.fromJson(Map<String, dynamic> json) => _$NodeInfoFromJson(json);

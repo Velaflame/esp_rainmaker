@@ -164,12 +164,18 @@ NodeInfo _$NodeInfoFromJson(Map<String, dynamic> json) => NodeInfo(
   firmwareVersion: json['fw_version'] as String,
   name: json['name'] as String,
   type: json['type'] as String,
+  model: json['model'] as String,
+  platform: json['platform'] as String,
+  projectName: json['project_name'] as String,
 );
 
 Map<String, dynamic> _$NodeInfoToJson(NodeInfo instance) => <String, dynamic>{
   'fw_version': instance.firmwareVersion,
   'name': instance.name,
   'type': instance.type,
+  'platform': instance.platform,
+  'project_name': instance.projectName,
+  'model': instance.model,
 };
 
 MappingStatus _$MappingStatusFromJson(Map<String, dynamic> json) =>
