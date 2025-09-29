@@ -316,6 +316,10 @@ class NodeState {
           'There was a problem parsing the days of the week or months');
     }
 
+    if(bitList.isEmpty) {
+      return 0;
+    }
+
     return bitList.reduce((val1, val2) {
       return val1 | val2;
     });
