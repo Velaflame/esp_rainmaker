@@ -1,4 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
+
+part 'response_models.g.dart';
 
 /// Data associated with a successful login.
 @immutable
@@ -106,5 +109,47 @@ class UserData {
         'Name: $name, '
         'Pic URL: $pictureUrl, '
         'MFA: $mfa, PhoneNumber: $phoneNumber)';
+  }
+}
+
+@JsonSerializable(includeIfNull: true)
+class MapItem {
+  final dynamic value;
+  final List<dynamic>? perms;
+
+  const MapItem({
+    required this.value,
+    this.perms,
+  });
+
+  factory MapItem.fromJson(Map<String, dynamic> json) => _$MapItemFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MapItemToJson(this);
+}
+
+class CustomUserData {
+
+  static Map<String, MapItem?> fromJson(Map<String, dynamic> json) {
+    final Map<String, MapItem?> customData = {};
+
+    json.forEach((key, value) {
+      customData[key] = value == null
+        ? null
+        : MapItem.fromJson(value);
+    });
+
+    return customData;
+  }
+
+  static Map<String, dynamic> toJson(Map<String, MapItem?> data) {
+    final Map<String, dynamic> json = {};
+
+    data.forEach((key, mapItem) {
+      json[key] = mapItem == null
+        ? null
+        : mapItem.toJson();
+    });
+
+    return json;
   }
 }

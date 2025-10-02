@@ -10,6 +10,7 @@ class User {
   static const String _logoutEndpoint = 'logout2';
   static const String _passwordChangeEndpoint = 'password2';
   static const String _forgotPasswordEndpoint = 'forgotpassword2';
+  static const String _customDataEndpoint = 'user/custom_data';
 
   final URLBase _urlBase;
 
@@ -487,6 +488,55 @@ class User {
       throw bodyResp['description'];
     }
     return UserData.fromJson(bodyResp);
+  }
+
+  /// Gets custom data associated with a user.
+  ///
+  /// Takes the the access token of the user.
+  /// Returns object containing properties associated
+  /// with a user.
+  Future<Map<String, MapItem?>> getCustomData(String accessToken) async {
+    final uri = _urlBase.getPath(_customDataEndpoint);
+
+    final resp = await get(
+      uri,
+      headers: {
+        URLBase.authHeader: accessToken,
+      },
+    );
+
+    final bodyResp = await JsonIsolate().decodeJson(resp.body);
+
+    if(resp.statusCode != 200) {
+      throw bodyResp['description'];
+    }
+
+    return CustomUserData.fromJson(bodyResp);
+  }
+
+  /// Changes a user's custom data.
+  ///
+  /// Use null values to remove entries from the data set.
+  Future<Map<String, MapItem?>> changeCustomData(String accessToken, Map<String, MapItem?> customData) async {
+    final uri = _urlBase.getPath(_customDataEndpoint);
+
+    final body = await JsonIsolate().encodeJson(customData);
+
+    final resp = await put(
+      uri,
+      body: body,
+      headers: {
+        URLBase.authHeader: accessToken,
+      },
+    );
+
+    final bodyResp = await JsonIsolate().decodeJson(resp.body);
+
+    if(resp.statusCode != 200) {
+      throw bodyResp['description'];
+    }
+
+    return CustomUserData.fromJson(bodyResp);
   }
 }
 
