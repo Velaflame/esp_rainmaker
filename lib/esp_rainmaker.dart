@@ -15,6 +15,7 @@ export 'src/device_grouping/response_models.dart';
 export 'src/iot_endpoint/iot_endpoint.dart';
 
 export 'src/ota_service/ota_service.dart';
+export 'src/ota_service/response_models.dart';
 
 /// Versions of the Rainmaker REST API to use.
 enum APIVersion { v1 }
