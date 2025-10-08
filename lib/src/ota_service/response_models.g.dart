@@ -49,6 +49,7 @@ Map<String, dynamic> _$UserGetOtaStatusResponseToJson(
 };
 
 const _$OTAStatusEnumMap = {
+  OTAStatus.triggered: 'triggered',
   OTAStatus.started: 'started',
   OTAStatus.inProgress: 'in-progress',
   OTAStatus.delayed: 'delayed',
