@@ -52,6 +52,8 @@ class OTAFetch with _$OTAFetch {
 
 
 enum OTAStatus {
+  @JsonValue('triggered')
+  triggered,
   @JsonValue('started')
   started,
   @JsonValue('in-progress')
