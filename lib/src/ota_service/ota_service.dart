@@ -72,6 +72,29 @@ class OTAService {
     return OTAFetch.fromJson(bodyResp);
   }
 
+  Future<void> authorizeOTAUpdate(String nodeID, String otaJobID) async {
+    final uri = _urlBase.getPath(_otaUpdate);
+
+    final body = await JsonIsolate().encodeJson({
+      'node_id': nodeID,
+      'ota_job_id': otaJobID,
+    });
+
+    final resp = await post(
+      uri,
+      body: body,
+      headers: {
+        URLBase.authHeader: accessToken,
+      },
+    );
+
+    final Map<String, dynamic> bodyResp = await JsonIsolate().decodeJson(resp.body);
+    
+    if(resp.statusCode != 200) {
+      throw bodyResp['description'];
+    }
+  }
+
   Future<UserGetOtaStatusResponse> otaStatus({
     required String nodeID,
     required String otaJobID,
